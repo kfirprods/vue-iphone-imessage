@@ -83,7 +83,7 @@ function submitMessage() {
   .text-lines {
     background: rgb(38, 38, 40);
     border-radius: 12px;
-    padding: 4px 8px;
+    padding: calc(var(--size) - 1px) calc(var(--size) + 1px);
 
     &.sent-by-me {
       background: rgb(49, 208, 89);
@@ -98,13 +98,14 @@ function submitMessage() {
   flex-direction: row;
   align-items: center;
   gap: 4px;
+  --button-background-color: rgb(31, 31, 31);
 
   .add-attachment-button {
     --button-size: calc(var(--size) * 3.4);
     width: var(--button-size);
     height: var(--button-size);
     border-radius: 50%;
-    background: rgb(31, 31, 31);
+    background: var(--button-background-color);
     color: rgb(167, 167, 167);
     display: flex;
     justify-content: center;

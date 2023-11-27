@@ -72,7 +72,7 @@ function sendMessageToNewConversation(message: string) {
     .search-box
       .search-icon
       div Search
-    .conversation-list
+    .conversation-list(v-if="conversations.length > 0")
       .conversation-container(v-for="conversation, index in conversations" :key="index" @click="openConversation(conversation)") 
         .avatar
         .text-container
@@ -82,6 +82,8 @@ function sendMessageToNewConversation(message: string) {
             .right-chevron >
           .text-lines
             label {{ getLastMessageFromConversation(conversation).text }}
+    .empty-conversations-message(v-else class="empty-conversations-message")
+      label No conversations yet
 
   conversation-viewer(v-else :conversation="selectedConversation" @back="selectedConversation = null" @submit-message="$emit('submit-message', $event, selectedConversation)")
 </template>
@@ -96,6 +98,11 @@ function sendMessageToNewConversation(message: string) {
 
   .conversations-list-view {
     padding: 2px;
+
+    .empty-conversations-message {
+      margin-top: 2em;
+      text-align: center;
+    }
   }
 
   h1 {
@@ -253,6 +260,10 @@ function sendMessageToNewConversation(message: string) {
   .new-chat {
     flex: 1;
     padding: 0 var(--size);
+
+    ::v-deep(.reply-container) {
+      --button-background-color: rgb(60, 60, 60);
+    }
   }
 }
 </style>
