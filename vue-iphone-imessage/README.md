@@ -1,46 +1,56 @@
 # vue-iphone-imessage
 
-This template should help get you started developing with Vue 3 in Vite.
+A set of Vue 3 components that mimic the look and feel of a physical iPhone, including the default Messages app.
 
-## Recommended IDE Setup
+There is no real purpose to this project, it was mostly a fun CSS challenge, but can be used to create beautiful mockups.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Installation
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```bash
+npm install vue-iphone-imessage
 ```
 
-### Compile and Hot-Reload for Development
+Then, import styles in your `main.js` file:
 
-```sh
-npm run dev
+```js
+import 'vue-iphone-imessage/dist/style.css'
 ```
 
-### Type-Check, Compile and Minify for Production
+You can use the components in your Vue 3 like this:
 
-```sh
-npm run build
+```vue
+<script setup>
+import { iPhoneComponent, iMessageAppComponent } from 'vue-iphone-imessage'
+
+const conversations = [
+  {
+    sender: '+1 123 456 7890',
+    messages: [
+      {
+        timestamp: 'Yesterday',
+        text: "Hey, what's up?",
+        sentByMe: false
+      }
+    ]
+  }
+]
+</script>
+
+<template>
+  <iPhoneComponent>
+    <iMessageAppComponent :conversations="conversations" />
+  </iPhoneComponent>
+</template>
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+You can, in theory, inject any component instead of `iMessageAppComponent`, but that hasn't been tested yet.
 
-```sh
-npm run lint
-```
+## Screenshots
+
+![Screenshot1](https://i.imgur.com/uesrYv1.png)
+![Screenshot2](https://i.imgur.com/ymMsI7L.png)
+![Screenshot3](https://i.imgur.com/3lleV9Z.png)
+
+## TypeScript
+
+This project is written in TypeScript and so it ships with built-in types. You shouldn't have to do anything special to use them.

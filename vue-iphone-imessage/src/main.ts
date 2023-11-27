@@ -1,6 +1,6 @@
-import './assets/main.css'
+import iPhoneComponent from './components/iPhoneComponent.vue'
+import iMessageAppComponent from './components/imessage/iMessageAppComponent.vue'
+import FullscreenModal from './components/FullscreenModal.vue'
+import { getClockTime } from './utils/time'
 
-import { createApp } from 'vue'
-import App from './App.vue'
-
-createApp(App).mount('#app')
+export { iPhoneComponent, iMessageAppComponent, FullscreenModal, getClockTime }

@@ -1,7 +1,40 @@
 {
   "name": "vue-iphone-imessage",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
+  "description": "Vue 3 components to render a physical iPhone device + basic iMessage",
+  "type": "module",
+  "author": "Kfir Eichenblat",
+  "license": "MIT",
+  "repository": "github:kfirprods/vue-iphone-imessage",
+  "keywords": [
+    "vue",
+    "vue3",
+    "iphone",
+    "imessage",
+    "components",
+    "ui",
+    "design",
+    "mobile",
+    "phone",
+    "ios",
+    "mock",
+    "mockup",
+    "sms"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue-iphone-imessage-components.umd.js",
+  "module": "./dist/vue-iphone-imessage-components.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/vue-iphone-imessage-components.js",
+      "require": "./dist/vue-iphone-imessage-components.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -12,6 +45,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "vite-plugin-dts": "^3.6.3",
     "vue": "^3.3.4"
   },
   "devDependencies": {
@@ -27,6 +61,7 @@
     "npm-run-all2": "^6.1.1",
     "prettier": "^3.0.3",
     "pug": "^3.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
     "sass": "^1.69.5",
     "typescript": "~5.2.0",
     "vite": "^4.4.11",
