@@ -105,7 +105,7 @@ function sendMessageToSelectedConversation({
     .conversations-list-view(:class="{ 'is-conversation-sliding-in': selectedConversation, 'is-modal-sliding-up': isNewMessageModalVisible }")
       .actions-bar
         .edit Edit
-        .new-message-button(@click="createMessage") New
+        .new-message-button(@click="createMessage")
       h1 Messages
       .search-box
         .search-icon
@@ -299,6 +299,39 @@ function sendMessageToSelectedConversation({
   .back-button,
   .new-message-button {
     cursor: pointer;
+  }
+
+  .new-message-button {
+    --button-size: calc(var(--size) * 2.2);
+    width: var(--button-size);
+    height: var(--button-size);
+    position: relative;
+
+    /* Square (notepad) */
+    &:before {
+      content: '';
+      position: absolute;
+      border: 1px solid var(--cta-foreground-color);
+      border-radius: 2px;
+      bottom: 0;
+      left: 0;
+      width: calc(var(--button-size) * 0.75);
+      height: calc(var(--button-size) * 0.75);
+    }
+
+    /* Pencil */
+    &:after {
+      content: '';
+      position: absolute;
+      border: 1px solid var(--cta-foreground-color);
+      border-radius: 100%;
+      top: 0;
+      right: 0;
+      width: 0px;
+      height: calc(var(--button-size) * 0.65);
+      transform: rotateZ(45deg);
+      transform-origin: top left;
+    }
   }
 }
 
