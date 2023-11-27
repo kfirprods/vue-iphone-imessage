@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import iPhone from './components/iPhoneComponent.vue'
-import iMessage from './components/iMessageAppComponent.vue'
+import iMessage from './components/imessage/iMessageAppComponent.vue'
+import { getClockTime } from '@/utils/time'
 
 const conversations = [
   {
@@ -32,23 +33,36 @@ const conversations = [
 
 function handleSubmitMessage(message: string, conversation: any) {
   conversation.messages.push({
-    timestamp: '1:12', // TODO: time now
+    timestamp: getClockTime(),
     text: message,
     sentByMe: true
   })
+}
+
+function handleCreateConversation(recipient: string, initialMessage: string) {
+  const newConversation = {
+    sender: recipient,
+    messages: []
+  }
+  conversations.unshift(newConversation)
+  handleSubmitMessage(initialMessage, newConversation)
 }
 </script>
 
 <template>
   <main>
     <iPhone network-text="4G">
-      <iMessage :conversations="conversations" @submit-message="handleSubmitMessage" />
+      <iMessage
+        :conversations="conversations"
+        @submit-message="handleSubmitMessage"
+        @create-new-conversation="handleCreateConversation"
+      />
     </iPhone>
   </main>
 </template>
 
 <style scoped lang="scss">
 main {
-  background: darken(blue, 48);
+  background: darken(blue, 42);
 }
 </style>

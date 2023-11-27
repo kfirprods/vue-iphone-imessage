@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { getClockTime } from '@/utils/time'
 
 const props = defineProps({
   clockOverride: {
@@ -16,23 +17,8 @@ const clockTime = ref('')
 
 const clockText = computed(() => props.clockOverride || clockTime.value)
 
-function getClockTime() {
-  function padTimeComponent(timeComponent: number) {
-    if (timeComponent < 10) {
-      return '0' + timeComponent
-    }
-    return timeComponent.toString()
-  }
-
-  var today = new Date()
-  var hh = today.getHours()
-  var mm = padTimeComponent(today.getMinutes())
-  return hh + ':' + mm
-}
-
 function updateClockText() {
   clockTime.value = getClockTime()
-  console.log('clockTime.value', clockTime.value)
 }
 
 // Tiny bit of JS to ensure that the notch doesn't move about when you resize the screen
@@ -99,7 +85,7 @@ onMounted(() => {
 <style lang="scss">
 // todo: figure out why this style cannot be scoped
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
 * {
   box-sizing: border-box;
@@ -147,6 +133,8 @@ onMounted(() => {
   --c-h: var(--deep-purple);
   --c-s: 100%;
   --c-l: 50%;
+
+  --cta-foreground-color: rgb(12, 131, 248);
 }
 
 // Squircle effect
@@ -249,6 +237,8 @@ onMounted(() => {
     0 0 0.1em 0.25em hsl(var(--c-h), 20%, 25%),
     0 0 0 var(--border-width) hsl(var(--c-h), 30%, 85%);
   box-sizing: border-box;
+
+  overflow: hidden;
 
   opacity: 0;
   transform: scale3d(1.1, 1.1, 1);
@@ -818,5 +808,46 @@ onMounted(() => {
   border-radius: calc(var(--border-radius) - var(--pad));
 
   transition: opacity 1s var(--ease-out) 0.25s;
+}
+
+.avatar {
+  --avatar-size: calc(var(--size) * 4.5);
+  background-image: linear-gradient(
+    45deg,
+    rgb(141, 141, 151) 0%,
+    rgb(145, 149, 160) 35%,
+    rgb(154, 162, 173) 100%
+  );
+  border-radius: 50%;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  position: relative;
+
+  /* Head */
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-80%) translateX(-50%);
+    width: calc(var(--avatar-size) / 3);
+    height: calc(var(--avatar-size) / 3);
+    border-radius: 50%;
+    background: white;
+  }
+
+  /* Body */
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%) rotate(30deg);
+    transform-origin: center;
+    width: calc(var(--avatar-size) * 0.5);
+    height: calc(var(--avatar-size) / 3);
+    border-radius: 100% 0;
+    background: white;
+  }
 }
 </style>
