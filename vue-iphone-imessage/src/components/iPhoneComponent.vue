@@ -586,7 +586,6 @@ onMounted(() => {
   backdrop-filter: blur(0.2em);
   mask-image: scrim-gradient(black, $from: 60);
   opacity: 0;
-
   border-radius: calc(var(--border-radius) - var(--pad));
 
   transition: var(--notch-duration) var(--ease);
@@ -804,7 +803,6 @@ onMounted(() => {
   overflow: hidden;
   z-index: 1;
 
-  padding-top: calc(var(--gutter) * 2);
   border-radius: calc(var(--border-radius) - var(--pad));
 
   transition: opacity 1s var(--ease-out) 0.25s;

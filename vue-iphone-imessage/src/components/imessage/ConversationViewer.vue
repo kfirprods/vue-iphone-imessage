@@ -11,7 +11,6 @@ defineProps({
 
 <template lang="pug">
 .conversation-viewer
-  .actions-bar-background
   .actions-bar
     .back-button-container
       .back-button(@click="$emit('back')") &lt;
@@ -38,6 +37,7 @@ defineProps({
 
   .actions-bar {
     padding: 6px;
+    padding-top: calc(var(--gutter) + var(--size) * 2);
     backdrop-filter: blur(10px);
     background-color: rgb(30, 30, 30, 0.5);
     z-index: 2;
@@ -75,17 +75,6 @@ defineProps({
     .new-message-button {
       cursor: pointer;
     }
-  }
-
-  .actions-bar-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(var(--gutter) + var(--size) * 0.5);
-    backdrop-filter: blur(10px);
-    background-color: rgb(30, 30, 30, 0.5);
-    z-index: 1;
   }
 }
 </style>

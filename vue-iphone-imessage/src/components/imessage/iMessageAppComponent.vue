@@ -271,7 +271,7 @@ function sendMessageToSelectedConversation({
   color: var(--cta-foreground-color);
   justify-content: space-between;
   user-select: none;
-  padding-top: 6px;
+  padding-top: calc(var(--gutter) + 6px);
   padding-bottom: 12px;
 
   .edit,
@@ -324,6 +324,10 @@ function sendMessageToSelectedConversation({
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.5s ease;
+
+  ::v-deep(.actions-bar) {
+    backdrop-filter: none !important;
+  }
 }
 
 .slide-enter-from {
