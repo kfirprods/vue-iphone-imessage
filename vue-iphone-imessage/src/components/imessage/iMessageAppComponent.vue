@@ -102,7 +102,7 @@ function sendMessageToSelectedConversation({
       conversation-chat(class="new-chat" :messages="[]" :submit-disabled="!newMessageRecipient" @submit-message="sendMessageToNewConversation")
 
   .slide-container(style="height: 100%")
-    .conversations-list-view
+    .conversations-list-view(:class="{ 'is-conversation-sliding-in': selectedConversation, 'is-modal-sliding-up': isNewMessageModalVisible }")
       .actions-bar
         .edit Edit
         .new-message-button(@click="createMessage") New
@@ -152,17 +152,38 @@ function sendMessageToSelectedConversation({
 
   .conversations-list-view {
     padding: 2px var(--size);
+    transform: translate(0), scale(1);
+    transition: transform 0.4s ease;
 
     .empty-conversations-message {
       margin-top: 2em;
       text-align: center;
     }
-  }
 
-  h1 {
-    font-size: calc(var(--size) * 3.14);
-    font-weight: bold;
-    margin-top: 4px;
+    h1 {
+      font-size: calc(var(--size) * 3.14);
+      font-weight: bold;
+      margin-top: 4px;
+      transform: translateX(0);
+      transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+    }
+
+    &.is-conversation-sliding-in {
+      pointer-events: none;
+      transform: translateX(-30%);
+
+      h1 {
+        transform: translateX(50%);
+        opacity: 0;
+      }
+    }
+
+    &.is-modal-sliding-up {
+      pointer-events: none;
+      transform: scale(0.95) translateY(var(--gutter));
+    }
   }
 
   .search-box {

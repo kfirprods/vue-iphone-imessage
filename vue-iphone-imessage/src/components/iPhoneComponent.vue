@@ -580,7 +580,7 @@ onMounted(() => {
   right: calc(var(--pad) - 3px);
   left: calc(var(--pad) - 3px);
   height: 100%;
-  max-height: calc(var(--notch-radius) * 1.5);
+  max-height: var(--notch-radius);
   backdrop-filter: blur(0.2em);
   mask-image: scrim-gradient(black, $from: 60);
   opacity: 0;
