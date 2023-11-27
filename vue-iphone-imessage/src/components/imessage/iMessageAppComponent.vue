@@ -101,28 +101,30 @@ function sendMessageToSelectedConversation({
         input(type="tel" v-model="newMessageRecipient")
       conversation-chat(class="new-chat" :messages="[]" :submit-disabled="!newMessageRecipient" @submit-message="sendMessageToNewConversation")
 
-  .conversations-list-view(v-if="!selectedConversation")
-    .actions-bar
-      .edit Edit
-      .new-message-button(@click="createMessage") New
-    h1 Messages
-    .search-box
-      .search-icon
-      div Search
-    .conversation-list(v-if="conversations.length > 0")
-      .conversation-container(v-for="conversation, index in conversations" :key="index" @click="openConversation(conversation)") 
-        .avatar
-        .text-container
-          .title-line
-            .sender {{ conversation.sender }}
-            .timestamp {{ getLastMessageFromConversation(conversation).timestamp }}
-            .right-chevron >
-          .text-lines
-            label {{ getLastMessageFromConversation(conversation).text }}
-    .empty-conversations-message(v-else class="empty-conversations-message")
-      label No conversations yet
+  .slide-container(style="height: 100%")
+    .conversations-list-view
+      .actions-bar
+        .edit Edit
+        .new-message-button(@click="createMessage") New
+      h1 Messages
+      .search-box
+        .search-icon
+        div Search
+      .conversation-list(v-if="conversations.length > 0")
+        .conversation-container(v-for="conversation, index in conversations" :key="index" @click="openConversation(conversation)") 
+          .avatar
+          .text-container
+            .title-line
+              .sender {{ conversation.sender }}
+              .timestamp {{ getLastMessageFromConversation(conversation).timestamp }}
+              .right-chevron >
+            .text-lines
+              label {{ getLastMessageFromConversation(conversation).text }}
+      .empty-conversations-message(v-else class="empty-conversations-message")
+        label No conversations yet
 
-  conversation-viewer(v-else :conversation="selectedConversation" @back="selectedConversation = null" @submit-message="sendMessageToSelectedConversation")
+    transition(name="slide")
+      conversation-viewer(v-if="selectedConversation" class="conversation-viewer" :conversation="selectedConversation" @back="selectedConversation = null" @submit-message="sendMessageToSelectedConversation")
 </template>
 
 <style scoped lang="scss">
@@ -132,6 +134,21 @@ function sendMessageToSelectedConversation({
   width: 100%;
   height: 100%;
   font-size: 1.8em;
+
+  .slide-container {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+
+    .conversation-viewer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+    }
+  }
 
   .conversations-list-view {
     padding: 2px;
@@ -302,5 +319,26 @@ function sendMessageToSelectedConversation({
       --button-background-color: rgb(60, 60, 60);
     }
   }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(100%);
+}
+
+.slide-enter-to {
+  transform: translateX(0);
+}
+
+.slide-leave-from {
+  transform: translateX(0);
+}
+
+.slide-leave-to {
+  transform: translateX(100%);
 }
 </style>
