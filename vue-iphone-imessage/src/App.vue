@@ -72,7 +72,7 @@ function handleCreateConversation({
 
 <template>
   <main>
-    <iPhone network-text="4G">
+    <iPhone network-text="4G" :battery-percentage="75">
       <iMessage
         :conversations="conversations"
         @submit-message="handleSubmitMessage"

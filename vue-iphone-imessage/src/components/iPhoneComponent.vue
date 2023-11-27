@@ -10,6 +10,10 @@ const props = defineProps({
   networkText: {
     type: String,
     default: '5G'
+  },
+  batteryPercentage: {
+    type: Number,
+    default: 70
   }
 });
 
@@ -65,8 +69,11 @@ onMounted(() => {
           .left
             .clock {{ clockText }}
           .right
-            .network {{ networkText }}
-            .battery
+            .network
+              span(v-if="networkText") {{ networkText }}
+              .wifi-bars(v-else)
+                .wifi-bar(v-for="i in wifiBars")
+            .battery(:style="{ '--battery-percentage': batteryPercentage }" :class="{ 'battery-low': batteryPercentage < 20 }")
           
         .notch-container(tabIndex="0")
             .notch
@@ -536,14 +543,19 @@ onMounted(() => {
   .battery {
     --battery-width: 25px;
     --battery-height: 12px;
-    --battery-percentage: 50;
+    --battery-percentage: 60;
     --battery-border-color: #444;
+    --battery-fill-color: #ccc;
     --battery-border-radius: 4px;
     position: relative;
     width: var(--battery-width);
     height: var(--battery-height);
     border: 1px solid var(--battery-border-color);
     border-radius: var(--battery-border-radius);
+
+    &.battery-low {
+      --battery-fill-color: red;
+    }
 
     /* Battery fill */
     &:before {
@@ -552,8 +564,8 @@ onMounted(() => {
       top: 1px;
       bottom: 1px;
       left: 1px;
-      width: calc(var(--battery-width) * (var(--battery-percentage) / 100));
-      background: #ccc;
+      width: calc((var(--battery-width) - 4px) * (var(--battery-percentage) / 100));
+      background: var(--battery-fill-color);
       border-radius: calc(var(--battery-border-radius) - 1px);
     }
 
@@ -844,6 +856,21 @@ onMounted(() => {
     height: calc(var(--avatar-size) / 3);
     border-radius: 100% 0;
     background: white;
+  }
+}
+
+.wifi-bars {
+  --wifi-bar-size: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+
+  .wifi-bar {
+    width: var(--wifi-bar-size);
+    height: var(--wifi-bar-size);
+    background: white;
+    border-radius: 0.1em;
   }
 }
 </style>
