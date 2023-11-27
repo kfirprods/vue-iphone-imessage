@@ -13,14 +13,14 @@ npm install vue-iphone-imessage
 Then, import styles in your `main.js` file:
 
 ```js
-import 'vue-iphone-imessage/dist/style.css'
+import 'vue-iphone-imessage/dist/style.css';
 ```
 
 You can use the components in your Vue 3 like this:
 
 ```vue
 <script setup>
-import { iPhoneComponent, iMessageAppComponent } from 'vue-iphone-imessage'
+import { iPhoneComponent, iMessageAppComponent } from 'vue-iphone-imessage';
 
 const conversations = [
   {
@@ -33,11 +33,11 @@ const conversations = [
       }
     ]
   }
-]
+];
 </script>
 
 <template>
-  <iPhoneComponent>
+  <iPhoneComponent network-text="4G" :battery-percentage="75">
     <iMessageAppComponent :conversations="conversations" />
   </iPhoneComponent>
 </template>
