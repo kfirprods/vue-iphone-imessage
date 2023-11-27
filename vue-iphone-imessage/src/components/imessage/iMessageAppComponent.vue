@@ -151,7 +151,7 @@ function sendMessageToSelectedConversation({
   }
 
   .conversations-list-view {
-    padding: 2px;
+    padding: 2px var(--size);
 
     .empty-conversations-message {
       margin-top: 2em;

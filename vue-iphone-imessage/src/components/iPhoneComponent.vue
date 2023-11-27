@@ -238,8 +238,6 @@ onMounted(() => {
     0 0 0 var(--border-width) hsl(var(--c-h), 30%, 85%);
   box-sizing: border-box;
 
-  overflow: hidden;
-
   opacity: 0;
   transform: scale3d(1.1, 1.1, 1);
   animation: appear 1s var(--ease-out) forwards;

@@ -27,6 +27,7 @@ const emit = defineEmits({
 });
 
 function submitMessage() {
+  if (props.submitDisabled) return;
   if (!inputText.value && attachments.value.length === 0) return;
 
   emit('submit-message', { message: inputText.value, attachments: attachments.value });

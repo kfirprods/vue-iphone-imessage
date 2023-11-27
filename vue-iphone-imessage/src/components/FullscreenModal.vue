@@ -25,11 +25,11 @@ transition(name="slide-up")
 
 <style scoped lang="scss">
 .fullscreen-modal-container {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   z-index: 2;
-  height: calc(100% - var(--gutter) - var(--pad) * 1.2);
+  height: calc(100% - var(--gutter) - var(--size));
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -75,7 +75,7 @@ transition(name="slide-up")
 
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
 }
 
 .slide-up-enter-from,
