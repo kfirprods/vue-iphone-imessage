@@ -106,9 +106,20 @@ onMounted(() => {
   font-smooth: always;
 }
 
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.8);
+  border-radius: 20px;
+  border: transparent;
+}
+
 :root {
-  --size: max(5px, 1vmin);
-  --height: 80em;
+  --size: 7px;
   --pad: 1.25em;
   --border-radius: 6.666em;
   --gutter: calc(var(--pad) * 2);
@@ -232,7 +243,7 @@ onMounted(() => {
   min-height: 590px;
   aspect-ratio: 37/76;
   background: black;
-  height: var(--height);
+  height: 100%;
   border-radius: var(--border-radius);
   box-shadow:
     0 0 0.1em 0.25em hsl(var(--c-h), 20%, 25%),
@@ -441,7 +452,7 @@ onMounted(() => {
 
 .notch-container {
   position: absolute;
-  z-index: 3;
+  z-index: 12;
   top: var(--pad);
   right: var(--pad);
   left: var(--pad);
@@ -510,26 +521,28 @@ onMounted(() => {
 
 .top-status-indicators {
   position: absolute;
-  top: calc(var(--pad) * 1.5);
-  left: calc(var(--pad) + 2px);
-  right: calc(var(--pad) + 2px);
+  z-index: 10;
+  top: calc(var(--gutter) - 0.7em);
+  left: calc(var(--gutter));
+  right: calc(var(--gutter));
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   color: white;
-  font-size: 10px;
+  font-size: 1em;
 
   .clock {
     color: white;
-    font-size: 12px;
+    font-size: 1.7em;
   }
 
   .right {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 6px;
+    gap: 0.8em;
+    font-size: 1.4em;
   }
 
   .battery {
@@ -574,7 +587,7 @@ onMounted(() => {
 // Blurred drop-shadow
 .notch-blur {
   position: absolute;
-  z-index: 2;
+  z-index: 11;
   top: calc(var(--pad) - 3px);
   right: calc(var(--pad) - 3px);
   left: calc(var(--pad) - 3px);
@@ -770,7 +783,7 @@ onMounted(() => {
   pointer-events: none;
 
   position: absolute;
-  z-index: 4;
+  z-index: 9999;
   top: calc(var(--pad) * 2);
   right: calc(50% - calc(var(--notch-width) * 0.5));
   margin-right: calc(var(--pad) * 0.333);
