@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import FullscreenModal from '@/components/FullscreenModal.vue';
 import ConversationViewer from './ConversationViewer.vue';
 import ConversationChat from './ConversationChat.vue';
+import type { AttachmentFile } from '@/types';
 
 const props = defineProps({
   conversations: {
@@ -11,8 +12,24 @@ const props = defineProps({
   }
 });
 const emits = defineEmits({
-  'submit-message': (message: string, conversation: any) => true,
-  'create-new-conversation': (recipient: string, initialMessage: string) => true
+  'submit-message': ({
+    message,
+    attachments,
+    conversation
+  }: {
+    message: string;
+    attachments: AttachmentFile[];
+    conversation: any;
+  }) => true,
+  'create-new-conversation': ({
+    recipient,
+    initialMessage,
+    attachments
+  }: {
+    recipient: string;
+    initialMessage: string;
+    attachments: AttachmentFile[];
+  }) => true
 });
 
 const selectedConversation = ref(null);
@@ -31,16 +48,26 @@ function createMessage() {
   isNewMessageModalVisible.value = true;
 }
 
-function sendMessageToNewConversation(message: string) {
+function sendMessageToNewConversation({
+  message,
+  attachments
+}: {
+  message: string;
+  attachments: AttachmentFile[];
+}) {
   const existingConversation = props.conversations.find(
     (conversation: any) => conversation.sender === newMessageRecipient.value
   );
 
   if (existingConversation) {
     selectedConversation.value = existingConversation;
-    emits('submit-message', message, existingConversation);
+    emits('submit-message', { message, attachments, conversation: existingConversation });
   } else {
-    emits('create-new-conversation', newMessageRecipient.value, message);
+    emits('create-new-conversation', {
+      recipient: newMessageRecipient.value,
+      initialMessage: message,
+      attachments
+    });
 
     const createdConversation = props.conversations.find(
       (conversation: any) => conversation.sender === newMessageRecipient.value
@@ -52,6 +79,16 @@ function sendMessageToNewConversation(message: string) {
 
   isNewMessageModalVisible.value = false;
   newMessageRecipient.value = '';
+}
+
+function sendMessageToSelectedConversation({
+  message,
+  attachments
+}: {
+  message: string;
+  attachments: AttachmentFile[];
+}) {
+  emits('submit-message', { message, attachments, conversation: selectedConversation.value });
 }
 </script>
 
@@ -85,7 +122,7 @@ function sendMessageToNewConversation(message: string) {
     .empty-conversations-message(v-else class="empty-conversations-message")
       label No conversations yet
 
-  conversation-viewer(v-else :conversation="selectedConversation" @back="selectedConversation = null" @submit-message="$emit('submit-message', $event, selectedConversation)")
+  conversation-viewer(v-else :conversation="selectedConversation" @back="selectedConversation = null" @submit-message="sendMessageToSelectedConversation")
 </template>
 
 <style scoped lang="scss">

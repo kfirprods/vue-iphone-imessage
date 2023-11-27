@@ -2,6 +2,7 @@
 import iPhone from './components/iPhoneComponent.vue';
 import iMessage from './components/imessage/iMessageAppComponent.vue';
 import { getClockTime } from '@/utils/time';
+import type { AttachmentFile } from './types';
 
 const conversations = [
   {
@@ -31,21 +32,38 @@ const conversations = [
   }
 ];
 
-function handleSubmitMessage(message: string, conversation: any) {
+function handleSubmitMessage({
+  message,
+  attachments,
+  conversation
+}: {
+  message: string;
+  attachments: AttachmentFile[];
+  conversation: any;
+}) {
   conversation.messages.push({
     timestamp: getClockTime(),
     text: message,
-    sentByMe: true
+    sentByMe: true,
+    attachments
   });
 }
 
-function handleCreateConversation(recipient: string, initialMessage: string) {
+function handleCreateConversation({
+  recipient,
+  initialMessage,
+  attachments
+}: {
+  recipient: string;
+  initialMessage: string;
+  attachments: AttachmentFile[];
+}) {
   const newConversation = {
     sender: recipient,
     messages: []
   };
   conversations.unshift(newConversation);
-  handleSubmitMessage(initialMessage, newConversation);
+  handleSubmitMessage({ message: initialMessage, attachments, conversation: newConversation });
 }
 </script>
 

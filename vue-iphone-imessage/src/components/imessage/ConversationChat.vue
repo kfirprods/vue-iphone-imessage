@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { AttachmentFile } from '@/types';
 
 defineProps({
   messages: {
@@ -13,33 +14,57 @@ defineProps({
 });
 
 const inputText = ref('');
+const attachments = ref<AttachmentFile[]>([]);
 
 const emit = defineEmits({
-  'submit-message': (message: string) => true
+  'submit-message': ({
+    message,
+    attachments
+  }: {
+    message: string;
+    attachments: AttachmentFile[];
+  }) => true
 });
 
 function submitMessage() {
-  if (!inputText.value) return;
+  if (!inputText.value && attachments.value.length === 0) return;
 
-  emit('submit-message', inputText.value);
+  emit('submit-message', { message: inputText.value, attachments: attachments.value });
   inputText.value = '';
+  attachments.value = [];
+}
+
+function addAttachmentFiles(event: Event) {
+  const files = (event.target as HTMLInputElement).files;
+  if (!files) return;
+
+  attachments.value = Array.from(files).map((file) => {
+    const url = URL.createObjectURL(file);
+    return { id: url, file, url };
+  });
 }
 </script>
 
 <template lang="pug">
 .chat-container
   .messages-list
-    .message-container(v-for="message, index in messages" :key="index")
+    .message-container(v-for="message, index in messages" :key="index" :class="{ 'sent-by-me': message.sentByMe }")
       .text-container
         .title-line
           .timestamp {{ message.timestamp }}
-        .text-lines(v-bind:class="{ 'sent-by-me': message.sentByMe }")
+        .attachments(v-if="message.attachments && message.attachments.length")
+          img(v-for="attachment in message.attachments" :key="attachment.id" :src="attachment.url" width="40" height="40" alt="Attachment")
+        .text-lines(v-if="message.text")
           label {{ message.text }}
   .reply-container
-    .add-attachment-button
+    .add-attachment-button(@click="$refs.fileInput.click()")
+      input(ref="fileInput" type="file" multiple accept="image/*, video/*" @change="addAttachmentFiles" style="display: none")
     .input-container
-      input(type="text" placeholder="Text message" v-model="inputText" @keyup.enter="submitMessage")
-      .submit-button(v-if="inputText" :class="{ disabled: submitDisabled }" @click="submitMessage")
+      .attachments-row(v-if="attachments.length")
+        img(v-for="attachment in attachments" :key="attachment.id" :src="attachment.url" width="40" height="40" alt="Attachment")
+      .text-row
+        input(type="text" placeholder="Text message" v-model="inputText" @keyup.enter="submitMessage")
+        .submit-button(v-if="inputText || attachments.length > 0" :class="{ disabled: submitDisabled }" @click="submitMessage")
 </template>
 
 <style scoped lang="scss">
@@ -82,14 +107,34 @@ function submitMessage() {
       font-weight: bold;
     }
   }
+
+  .attachments {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    padding: 2px;
+    flex-wrap: wrap;
+
+    img {
+      border-radius: 8px;
+    }
+  }
+
   .text-lines {
     background: rgb(38, 38, 40);
     border-radius: 12px;
     padding: calc(var(--size) - 1px) calc(var(--size) + 1px);
+  }
 
-    &.sent-by-me {
+  &.sent-by-me {
+    .text-lines {
       background: rgb(49, 208, 89);
       color: rgb(236, 255, 232);
+      align-self: flex-end;
+    }
+
+    .attachments {
       align-self: flex-end;
     }
   }
@@ -113,6 +158,8 @@ function submitMessage() {
     justify-content: center;
     align-items: center;
     position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
 
     &:before {
       content: '+';
@@ -129,21 +176,41 @@ function submitMessage() {
 
   .input-container {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
     background: black;
     border: 1px solid rgb(20, 20, 20);
     border-radius: 12px;
     padding: 2px;
-  }
 
-  input {
-    flex: 1;
-    background: none;
-    border: none;
-    font-size: calc(var(--size) * 1.7);
-    outline: none;
-    color: white;
-    padding: 4px 6px;
+    input[type='text'] {
+      flex: 1;
+      background: none;
+      border: none;
+      font-size: calc(var(--size) * 1.7);
+      outline: none;
+      color: white;
+      padding: 4px 6px;
+    }
+
+    .text-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .attachments-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+      padding: 2px;
+      flex-wrap: wrap;
+
+      img {
+        border-radius: 8px;
+      }
+    }
   }
 
   .submit-button {
