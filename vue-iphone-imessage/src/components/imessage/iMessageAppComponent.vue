@@ -1,57 +1,57 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import FullscreenModal from '@/components/FullscreenModal.vue'
-import ConversationViewer from './ConversationViewer.vue'
-import ConversationChat from './ConversationChat.vue'
+import { ref, computed } from 'vue';
+import FullscreenModal from '@/components/FullscreenModal.vue';
+import ConversationViewer from './ConversationViewer.vue';
+import ConversationChat from './ConversationChat.vue';
 
 const props = defineProps({
   conversations: {
     type: Array as () => any[],
     required: true
   }
-})
+});
 const emits = defineEmits({
   'submit-message': (message: string, conversation: any) => true,
   'create-new-conversation': (recipient: string, initialMessage: string) => true
-})
+});
 
-const selectedConversation = ref(null)
-const isNewMessageModalVisible = ref(false)
-const newMessageRecipient = ref('')
+const selectedConversation = ref(null);
+const isNewMessageModalVisible = ref(false);
+const newMessageRecipient = ref('');
 
 function openConversation(conversation: any) {
-  selectedConversation.value = conversation
+  selectedConversation.value = conversation;
 }
 
 function getLastMessageFromConversation(conversation: any) {
-  return conversation.messages[conversation.messages.length - 1]
+  return conversation.messages[conversation.messages.length - 1];
 }
 
 function createMessage() {
-  isNewMessageModalVisible.value = true
+  isNewMessageModalVisible.value = true;
 }
 
 function sendMessageToNewConversation(message: string) {
   const existingConversation = props.conversations.find(
     (conversation: any) => conversation.sender === newMessageRecipient.value
-  )
+  );
 
   if (existingConversation) {
-    selectedConversation.value = existingConversation
-    emits('submit-message', message, existingConversation)
+    selectedConversation.value = existingConversation;
+    emits('submit-message', message, existingConversation);
   } else {
-    emits('create-new-conversation', newMessageRecipient.value, message)
+    emits('create-new-conversation', newMessageRecipient.value, message);
 
     const createdConversation = props.conversations.find(
       (conversation: any) => conversation.sender === newMessageRecipient.value
-    )
+    );
     if (createdConversation) {
-      selectedConversation.value = createdConversation
+      selectedConversation.value = createdConversation;
     }
   }
 
-  isNewMessageModalVisible.value = false
-  newMessageRecipient.value = ''
+  isNewMessageModalVisible.value = false;
+  newMessageRecipient.value = '';
 }
 </script>
 

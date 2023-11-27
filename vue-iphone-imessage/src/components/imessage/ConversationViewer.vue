@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import ConversationChat from './ConversationChat.vue'
+import ConversationChat from './ConversationChat.vue';
 
 defineProps({
   conversation: {
     type: Object,
     required: true
   }
-})
+});
 </script>
 
 <template lang="pug">

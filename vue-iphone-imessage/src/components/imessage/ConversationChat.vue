@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 defineProps({
   messages: {
@@ -10,17 +10,19 @@ defineProps({
     type: Boolean,
     default: false
   }
-})
+});
 
-const inputText = ref('')
+const inputText = ref('');
 
 const emit = defineEmits({
   'submit-message': (message: string) => true
-})
+});
 
 function submitMessage() {
-  emit('submit-message', inputText.value)
-  inputText.value = ''
+  if (!inputText.value) return;
+
+  emit('submit-message', inputText.value);
+  inputText.value = '';
 }
 </script>
 

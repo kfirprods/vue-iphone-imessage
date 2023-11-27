@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { getClockTime } from '@/utils/time'
+import { computed, onMounted, ref } from 'vue';
+import { getClockTime } from '@/utils/time';
 
 const props = defineProps({
   clockOverride: {
@@ -11,34 +11,34 @@ const props = defineProps({
     type: String,
     default: '5G'
   }
-})
+});
 
-const clockTime = ref('')
+const clockTime = ref('');
 
-const clockText = computed(() => props.clockOverride || clockTime.value)
+const clockText = computed(() => props.clockOverride || clockTime.value);
 
 function updateClockText() {
-  clockTime.value = getClockTime()
+  clockTime.value = getClockTime();
 }
 
 // Tiny bit of JS to ensure that the notch doesn't move about when you resize the screen
-const resizeDelay = 300
-let afterResizeTimeout: any
+const resizeDelay = 300;
+let afterResizeTimeout: any;
 
 onMounted(() => {
   window.onresize = function () {
-    document.body.classList.add('is-resizing')
-    clearTimeout(afterResizeTimeout)
+    document.body.classList.add('is-resizing');
+    clearTimeout(afterResizeTimeout);
     afterResizeTimeout = setTimeout(
       () => document.body.classList.remove('is-resizing'),
       resizeDelay
-    )
-  }
+    );
+  };
 
   // Update clock
-  setInterval(updateClockText, 1000)
-  updateClockText()
-})
+  setInterval(updateClockText, 1000);
+  updateClockText();
+});
 </script>
 
 <template lang="pug">

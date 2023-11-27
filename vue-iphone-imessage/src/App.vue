@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import iPhone from './components/iPhoneComponent.vue'
-import iMessage from './components/imessage/iMessageAppComponent.vue'
-import { getClockTime } from '@/utils/time'
+import iPhone from './components/iPhoneComponent.vue';
+import iMessage from './components/imessage/iMessageAppComponent.vue';
+import { getClockTime } from '@/utils/time';
 
 const conversations = [
   {
@@ -29,23 +29,23 @@ const conversations = [
       }
     ]
   }
-]
+];
 
 function handleSubmitMessage(message: string, conversation: any) {
   conversation.messages.push({
     timestamp: getClockTime(),
     text: message,
     sentByMe: true
-  })
+  });
 }
 
 function handleCreateConversation(recipient: string, initialMessage: string) {
   const newConversation = {
     sender: recipient,
     messages: []
-  }
-  conversations.unshift(newConversation)
-  handleSubmitMessage(initialMessage, newConversation)
+  };
+  conversations.unshift(newConversation);
+  handleSubmitMessage(initialMessage, newConversation);
 }
 </script>
 
