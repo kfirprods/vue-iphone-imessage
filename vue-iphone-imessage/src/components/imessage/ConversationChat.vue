@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { nextTick, ref, watch } from 'vue';
 import type { AttachmentFile } from '@/types';
 
-defineProps({
+const props = defineProps({
   messages: {
     type: Array as () => any[],
     required: true
@@ -43,6 +43,19 @@ function addAttachmentFiles(event: Event) {
     return { id: url, file, url };
   });
 }
+
+watch(
+  () => props.messages,
+  () => {
+    nextTick(() => {
+      const messages = document.querySelectorAll('.messages-list .message-container');
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage) {
+        lastMessage.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+);
 </script>
 
 <template lang="pug">

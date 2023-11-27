@@ -41,12 +41,15 @@ function handleSubmitMessage({
   attachments: AttachmentFile[];
   conversation: any;
 }) {
-  conversation.messages.push({
-    timestamp: getClockTime(),
-    text: message,
-    sentByMe: true,
-    attachments
-  });
+  conversation.messages = [
+    ...conversation.messages,
+    {
+      timestamp: getClockTime(),
+      text: message,
+      sentByMe: true,
+      attachments
+    }
+  ];
 }
 
 function handleCreateConversation({
