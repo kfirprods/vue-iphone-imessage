@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue';
-import type { AttachmentFile } from '@/types';
+import { type AttachmentFile, MessageDeliveryStatus } from '@/types';
 
 const props = defineProps({
   messages: {
@@ -45,6 +45,19 @@ function addAttachmentFiles(event: Event) {
   });
 }
 
+function convertStatusToText(status: MessageDeliveryStatus) {
+  switch (status) {
+    case MessageDeliveryStatus.SENT:
+      return 'Sent';
+    case MessageDeliveryStatus.DELIVERED:
+      return 'Delivered';
+    case MessageDeliveryStatus.READ:
+      return 'Read';
+    case MessageDeliveryStatus.FAILED:
+      return 'Not Delivered ';
+  }
+}
+
 watch(
   () => props.messages,
   () => {
@@ -70,6 +83,8 @@ watch(
           img(v-for="attachment in message.attachments" :key="attachment.id" :src="attachment.url" width="40" height="40" alt="Attachment")
         .text-lines(v-if="message.text")
           label {{ message.text }}
+        .status-line(v-if="message.status" :class="{ 'failed': message.status === MessageDeliveryStatus.FAILED }")
+          label {{ convertStatusToText(message.status) }}
   .reply-container
     .add-attachment-button(@click="$refs.fileInput.click()")
       input(ref="fileInput" type="file" multiple accept="image/*, video/*" @change="addAttachmentFiles" style="display: none")
@@ -112,13 +127,13 @@ watch(
     display: flex;
     flex-direction: column;
     align-items: baseline;
-    gap: 4px;
 
     .title-line {
       align-self: center;
       font-size: calc(var(--size) * 1.3);
       color: rgb(113, 113, 113);
       font-weight: bold;
+      margin-bottom: 4px;
     }
   }
 
@@ -129,6 +144,7 @@ watch(
     gap: 4px;
     padding: 2px;
     flex-wrap: wrap;
+    margin-bottom: 4px;
 
     img {
       border-radius: 8px;
@@ -140,6 +156,17 @@ watch(
     border-radius: 12px;
     padding: calc(var(--size) - 1px) calc(var(--size) + 1px);
     overflow-wrap: anywhere;
+  .status-line {
+    align-self: flex-end;
+    font-size: calc(var(--size) * 1.3);
+    color: rgb(113, 113, 113);
+    font-weight: bold;
+    margin-top: 2px;
+
+    &.failed {
+      color: rgb(255, 69, 58);
+    }
+  }
   }
 
   &.sent-by-me {

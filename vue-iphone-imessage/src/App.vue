@@ -2,7 +2,7 @@
 import iPhone from './components/iPhoneComponent.vue';
 import iMessage from './components/imessage/iMessageAppComponent.vue';
 import { getClockTime } from '@/utils/time';
-import type { AttachmentFile } from './types';
+import { type AttachmentFile, MessageDeliveryStatus } from './types';
 
 const conversations = [
   {
@@ -16,7 +16,8 @@ const conversations = [
       {
         timestamp: '1:11',
         text: 'Why not?',
-        sentByMe: true
+        sentByMe: true,
+        status: MessageDeliveryStatus.SENT
       }
     ]
   },
@@ -27,6 +28,12 @@ const conversations = [
         timestamp: 'Thursday',
         text: 'Buy protein bars! Call +1 (514) 469-0450 to order',
         sentByMe: false
+      },
+      {
+        timestamp: 'Yesterday',
+        text: 'Please remove me from this list',
+        sentByMe: true,
+        status: MessageDeliveryStatus.FAILED
       }
     ]
   }
