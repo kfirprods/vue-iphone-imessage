@@ -156,6 +156,8 @@ watch(
     border-radius: 12px;
     padding: calc(var(--size) - 1px) calc(var(--size) + 1px);
     overflow-wrap: anywhere;
+  }
+
   .status-line {
     align-self: flex-end;
     font-size: calc(var(--size) * 1.3);
@@ -166,7 +168,6 @@ watch(
     &.failed {
       color: rgb(255, 69, 58);
     }
-  }
   }
 
   &.sent-by-me {
