@@ -1,6 +1,6 @@
 {
   "name": "vue-iphone-imessage",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Vue 3 components to render a physical iPhone device + basic iMessage",
   "type": "module",
   "author": "Kfir Eichenblat",

@@ -265,6 +265,7 @@ function sendMessageToSelectedConversation({
         border-top: 1px solid #222;
         padding-top: 8px;
         padding-bottom: 8px;
+        min-width: 0;
 
         .title-line {
           display: flex;
