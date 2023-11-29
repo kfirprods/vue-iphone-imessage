@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 import FullscreenModal from '@/components/FullscreenModal.vue';
 import ConversationViewer from './ConversationViewer.vue';
 import ConversationChat from './ConversationChat.vue';
@@ -77,8 +77,11 @@ function sendMessageToNewConversation({
     }
   }
 
-  isNewMessageModalVisible.value = false;
   newMessageRecipient.value = '';
+
+  nextTick(() => {
+    isNewMessageModalVisible.value = false;
+  });
 }
 
 function sendMessageToSelectedConversation({
@@ -123,7 +126,7 @@ function sendMessageToSelectedConversation({
       .empty-conversations-message(v-else class="empty-conversations-message")
         label No conversations yet
 
-    transition(name="slide")
+    transition(v-if="!isNewMessageModalVisible" name="slide")
       conversation-viewer(v-if="selectedConversation" class="conversation-viewer" :conversation="selectedConversation" @back="selectedConversation = null" @submit-message="sendMessageToSelectedConversation")
 </template>
 
@@ -247,6 +250,7 @@ function sendMessageToSelectedConversation({
       gap: 6px;
       cursor: pointer;
       user-select: none;
+      overflow: hidden;
 
       label {
         cursor: pointer;
