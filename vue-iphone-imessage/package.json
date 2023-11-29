@@ -1,6 +1,6 @@
 {
   "name": "vue-iphone-imessage",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "description": "Vue 3 components to render a physical iPhone device + basic iMessage",
   "type": "module",
   "author": "Kfir Eichenblat",
@@ -42,7 +42,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "publish": "npm run build && npm publish"
   },
   "dependencies": {
     "vite-plugin-dts": "^3.6.3",

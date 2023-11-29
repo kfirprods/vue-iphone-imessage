@@ -139,6 +139,7 @@ watch(
     background: rgb(38, 38, 40);
     border-radius: 12px;
     padding: calc(var(--size) - 1px) calc(var(--size) + 1px);
+    overflow-wrap: anywhere;
   }
 
   &.sent-by-me {

@@ -25,7 +25,7 @@ const conversations = [
     messages: [
       {
         timestamp: 'Thursday',
-        text: 'Buy protein bars!',
+        text: 'Buy protein bars! Call +1 (514) 469-0450 to order',
         sentByMe: false
       }
     ]

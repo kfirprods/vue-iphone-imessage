@@ -171,6 +171,10 @@ function sendMessageToSelectedConversation({
     }
 
     &.is-conversation-sliding-in {
+      // Set position to absolute to "detach" the conversations list from the conversation view
+      position: absolute;
+      left: 0;
+      top: 0;
       pointer-events: none;
       transform: translateX(-30%);
 
@@ -248,6 +252,10 @@ function sendMessageToSelectedConversation({
         cursor: pointer;
       }
 
+      .avatar {
+        flex-shrink: 0;
+      }
+
       .text-container {
         flex-grow: 1;
         border-top: 1px solid #222;
@@ -281,6 +289,9 @@ function sendMessageToSelectedConversation({
       .text-lines {
         margin-top: 2px;
         color: gray;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }

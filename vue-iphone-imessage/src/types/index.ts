@@ -1,1 +1,1 @@
-export * from './imessage/attachment-file';
+export * from './imessage/attachment-file.type';
