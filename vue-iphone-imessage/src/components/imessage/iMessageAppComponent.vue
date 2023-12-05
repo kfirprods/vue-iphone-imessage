@@ -119,10 +119,10 @@ function sendMessageToSelectedConversation({
           .text-container
             .title-line
               .sender {{ conversation.sender }}
-              .timestamp {{ getLastMessageFromConversation(conversation).timestamp }}
+              .timestamp {{ (getLastMessageFromConversation(conversation)?.timestamp ?? "") }}
               .right-chevron >
             .text-lines
-              label {{ getLastMessageFromConversation(conversation).text }}
+              label {{ getLastMessageFromConversation(conversation)?.text ?? "" }}
       .empty-conversations-message(v-else class="empty-conversations-message")
         label No conversations yet
 

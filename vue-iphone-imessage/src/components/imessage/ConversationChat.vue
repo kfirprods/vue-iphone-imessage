@@ -65,7 +65,7 @@ watch(
       const messages = document.querySelectorAll('.messages-list .message-container');
       const lastMessage = messages[messages.length - 1];
       if (lastMessage) {
-        lastMessage.scrollIntoView({ behavior: 'smooth' });
+        lastMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
   }
