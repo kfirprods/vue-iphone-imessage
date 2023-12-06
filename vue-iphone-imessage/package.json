@@ -43,7 +43,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "publish": "npm run build && npm publish"
+    "build-and-publish": "npm run build && npm publish"
   },
   "dependencies": {
     "vite-plugin-dts": "^3.6.3",
