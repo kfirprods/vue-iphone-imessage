@@ -4,6 +4,8 @@ A set of Vue 3 components that mimic the look and feel of a physical iPhone, inc
 
 There is no real purpose to this project, it was mostly a fun CSS challenge, but can be used to create beautiful mockups.
 
+Based on this "iPhone 14 w/ Dynamic Island" CodePen: https://codepen.io/lukemeyrick/pen/poVyEdZ
+
 ## Installation
 
 ```bash
