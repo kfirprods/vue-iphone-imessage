@@ -69,6 +69,7 @@ function sendMessageToNewConversation({
       attachments
     });
 
+    // Immediately open the new conversation (in case of async creation, developers can just call the exposed setSelectedConversation function)
     const createdConversation = props.conversations.find(
       (conversation: any) => conversation.sender === newMessageRecipient.value
     );
@@ -93,6 +94,10 @@ function sendMessageToSelectedConversation({
 }) {
   emits('submit-message', { message, attachments, conversation: selectedConversation.value });
 }
+
+defineExpose({
+  setSelectedConversation: openConversation
+});
 </script>
 
 <template lang="pug">
